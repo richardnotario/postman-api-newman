@@ -1,0 +1,17 @@
+{
+  "name": "api-testing-newman-ci",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Postman/Newman API testing package for local runs and GitLab CI/CD.",
+  "scripts": {
+    "test:api": "newman run postman/QA_API_Training_Lab.postman_collection.json -e postman/QA_API_Training_Lab.postman_environment.json",
+    "test:api:report": "mkdir -p reports && newman run postman/QA_API_Training_Lab.postman_collection.json -e postman/QA_API_Training_Lab.postman_environment.json -r cli,htmlextra,junit --reporter-htmlextra-export reports/newman-report.html --reporter-junit-export reports/newman-junit.xml",
+    "test:api:ci": "mkdir -p reports && newman run postman/QA_API_Training_Lab.postman_collection.json -e postman/QA_API_Training_Lab.postman_environment.json --env-var baseUrl=$API_BASE_URL --env-var loginEmail=$LOGIN_EMAIL --env-var loginPassword=$LOGIN_PASSWORD -r cli,htmlextra,junit --reporter-htmlextra-export reports/newman-report.html --reporter-junit-export reports/newman-junit.xml",
+    "test:patients": "newman run postman/QA_API_Training_Lab.postman_collection.json -e postman/QA_API_Training_Lab.postman_environment.json --folder \"02 Patients\"",
+    "test:smoke": "newman run postman/QA_API_Training_Lab.postman_collection.json -e postman/QA_API_Training_Lab.postman_environment.json --folder \"01 Public Endpoints\" --folder \"03 Authentication\""
+  },
+  "devDependencies": {
+    "newman": "^6.2.1",
+    "newman-reporter-htmlextra": "^1.23.1"
+  }
+}
